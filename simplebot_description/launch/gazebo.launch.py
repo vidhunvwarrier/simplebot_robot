@@ -10,6 +10,7 @@ def generate_launch_description():
     pkd_dir = get_package_share_directory("simplebot_description")
     
     urdf_path = os.path.join(pkd_dir, "urdf", "simple_bot.urdf.xacro")
+    ekf_config = os.path.join(pkd_dir, 'config', 'ekf.yaml')
     
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
@@ -36,8 +37,17 @@ def generate_launch_description():
         output='screen'
     )
     
+    robot_localization_node = Node(
+        package= 'robot_localization',
+        executable='ekf_node',
+        name='ekf_filter_node',
+        output='screen',
+        parameters=[ekf_config, {'use_sim_time': True}]
+    )
+    
     return LaunchDescription([
         joint_state_publisher_node,
         robot_state_publisher_node,
-        spawn_robot
+        spawn_robot,
+        robot_localization_node
     ])
