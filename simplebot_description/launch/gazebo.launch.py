@@ -1,5 +1,7 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command
 from launch_ros.substitutions import FindPackageShare
 from ament_index_python.packages import get_package_share_directory
@@ -7,10 +9,22 @@ import os
 
 
 def generate_launch_description():
-    pkd_dir = get_package_share_directory("simplebot_description")
+    pkg_dir = get_package_share_directory("simplebot_description")
     
-    urdf_path = os.path.join(pkd_dir, "urdf", "simple_bot.urdf.xacro")
-    ekf_config = os.path.join(pkd_dir, 'config', 'ekf.yaml')
+    urdf_path = os.path.join(pkg_dir, "urdf", "simple_bot.urdf.xacro")
+    ekf_config = os.path.join(pkg_dir, 'config', 'ekf.yaml')
+    world_path = os.path.join(pkg_dir, "world", "grid.world")
+    
+    gazebo_node = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [os.path.join(
+                get_package_share_directory('gazebo_ros'),
+                'launch',
+                'gazebo.launch.py'
+            )]
+        ),
+        launch_arguments= {'world': world_path}.items()
+    )
     
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
@@ -46,6 +60,7 @@ def generate_launch_description():
     )
     
     return LaunchDescription([
+        gazebo_node,
         joint_state_publisher_node,
         robot_state_publisher_node,
         spawn_robot,

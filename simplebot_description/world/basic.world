@@ -1,0 +1,91 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="closed_env">
+
+    <!-- Physics -->
+    <physics type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <!-- Light -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- Floor -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- Four walls -->
+    <model name="walls">
+      <static>true</static>
+      <link name="wall_link">
+        <!-- Back wall -->
+        <collision name="collision_back">
+          <geometry><box><size>10 0.1 2.5</size></box></geometry>
+          <pose>0 -5 1.25 0 0 0</pose>
+        </collision>
+        <visual name="visual_back">
+          <geometry><box><size>10 0.1 2.5</size></box></geometry>
+          <pose>0 -5 1.25 0 0 0</pose>
+        </visual>
+
+        <!-- Front wall -->
+        <collision name="collision_front">
+          <geometry><box><size>10 0.1 2.5</size></box></geometry>
+          <pose>0 5 1.25 0 0 0</pose>
+        </collision>
+        <visual name="visual_front">
+          <geometry><box><size>10 0.1 2.5</size></box></geometry>
+          <pose>0 5 1.25 0 0 0</pose>
+        </visual>
+
+        <!-- Left wall -->
+        <collision name="collision_left">
+          <geometry><box><size>0.1 10 2.5</size></box></geometry>
+          <pose>-5 0 1.25 0 0 0</pose>
+        </collision>
+        <visual name="visual_left">
+          <geometry><box><size>0.1 10 2.5</size></box></geometry>
+          <pose>-5 0 1.25 0 0 0</pose>
+        </visual>
+
+        <!-- Right wall -->
+        <collision name="collision_right">
+          <geometry><box><size>0.1 10 2.5</size></box></geometry>
+          <pose>5 0 1.25 0 0 0</pose>
+        </collision>
+        <visual name="visual_right">
+          <geometry><box><size>0.1 10 2.5</size></box></geometry>
+          <pose>5 0 1.25 0 0 0</pose>
+        </visual>
+      </link>
+    </model>
+
+    <!-- A moving obstacle -->
+    <model name="moving_box">
+      <static>false</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.5 0.5 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.5 0.5 0.5</size></box></geometry>
+          <material><ambient>1 0 0 1</ambient></material>
+        </visual>
+      </link>
+
+      <!-- Make it move in a loop -->
+      <plugin name="box_mover" filename="libgazebo_ros_planar_move.so">
+        <ros>
+          <namespace>/moving_box</namespace>
+        </ros>
+        <x_vel>0.5</x_vel>
+        <y_vel>0.0</y_vel>
+      </plugin>
+    </model>
+
+  </world>
+</sdf>
