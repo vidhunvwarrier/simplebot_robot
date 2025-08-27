@@ -12,11 +12,9 @@ ekf_filter_node:
     map_frame: map
     odom_frame: odom
     base_link_frame: base_link
-    world_frame: odom        # keep 'odom' since we're not fusing GPS
+    world_frame: odom      
 
     # ========== Wheel Odometry ==========
-    # Use position (x,y) and forward velocity (vx) from /odom.
-    # Do NOT fuse yaw from odom (IMU provides yaw). No vyaw from odom either.
     odom0: /odom
     odom0_config: [true,  true,  false,   # x, y, z
                    false, false, true,   # roll, pitch, yaw
@@ -29,7 +27,6 @@ ekf_filter_node:
     odom0_nodelay: false
 
     # ========== IMU ==========
-    # Fuse yaw (orientation), gyro (angular velocities), and planar accel (ax, ay).
     imu0: /imu/data
     imu0_config: [false, false, false,   # position
                   false, false, false,    # orientation: yaw only
@@ -41,7 +38,3 @@ ekf_filter_node:
     imu0_remove_gravitational_acceleration: true
     imu0_queue_size: 10
     imu0_nodelay: false
-
-    # Optional: if your IMU orientation is already ENU and zeroed at start, leave as is.
-    # If you need to yaw-align at startup (rare in sim), you can enable:
-    # initial_yaw: 0.0
