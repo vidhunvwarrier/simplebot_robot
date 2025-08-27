@@ -105,8 +105,7 @@ Try giving a navigation goal to the robot such that it encounters the moving obs
 
 ## Demo
 
-
-Video:
+([Video](https://github.com/vidhunvwarrier/simplebot_robot/blob/main/video.mp4))
 
 ## Future Improvements
 - Add support for different local planners (e.g., TEB).  
