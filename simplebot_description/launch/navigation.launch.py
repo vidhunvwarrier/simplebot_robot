@@ -9,6 +9,7 @@ def generate_launch_description():
     pkg_dir = get_package_share_directory("simplebot_description")
     nav_param_file = os.path.join(pkg_dir, 'config', 'nav2.yaml')
     map_file = os.path.join(pkg_dir, 'map', 'grid_map2.yaml')
+    navigation_rviz = os.path.join(pkg_dir, 'rviz', 'navigation.rviz')
     
     navigation_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -22,6 +23,15 @@ def generate_launch_description():
         }.items()
     )
     
+    rviz_node = Node(
+        package="rviz2",
+        executable="rviz2",
+        name="rviz2",
+        arguments=["-d", navigation_rviz],
+        output="screen"
+    )
+    
     return LaunchDescription([
-        navigation_node
+        navigation_node, 
+        rviz_node
     ])
