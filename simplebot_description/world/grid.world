@@ -70,7 +70,7 @@
         </visual>
         <pose>0 2.5 0 0 -0 0</pose>
       </link>
-      <link name='Wall_11'>
+      <!-- <link name='Wall_11'>
         <collision name='Wall_11_Collision'>
           <geometry>
             <box>
@@ -98,7 +98,7 @@
           </meta>
         </visual>
         <pose>5 -0.75 0 0 -0 1.5708</pose>
-      </link>
+      </link> -->
       <link name='Wall_2'>
         <collision name='Wall_2_Collision'>
           <geometry>
@@ -157,7 +157,7 @@
         </visual>
         <pose>0 -2.5 0 0 -0 3.14159</pose>
       </link>
-      <link name='Wall_5'>
+      <!-- <link name='Wall_5'>
         <collision name='Wall_5_Collision'>
           <geometry>
             <box>
@@ -185,7 +185,7 @@
           </meta>
         </visual>
         <pose>-5 1.25 0 0 -0 -1.5708</pose>
-      </link>
+      </link> -->
       <link name='Wall_7'>
         <collision name='Wall_7_Collision'>
           <geometry>
@@ -245,6 +245,61 @@
         <pose>3 0.75 0 0 -0 -1.5708</pose>
       </link>
       <static>1</static>
+    </model>
+
+    <model name="moving_box">
+      <static>false</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.5 0.5 0.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.5 0.5 0.5</size></box></geometry>
+          <material><ambient>1 0 0 1</ambient></material>
+        </visual>
+        <pose>0 2 0 0 0 0</pose>
+      </link>
+
+      <plugin name="box_mover" filename="libgazebo_ros_planar_move.so">
+        <ros>
+          <namespace>/moving_box</namespace>
+        </ros>
+        <x_vel>0.5</x_vel>
+        <y_vel>0.0</y_vel>
+      </plugin>
+    </model>
+
+    <model name="box2">
+      <static>false</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>1.0 1.0 1.0</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>1.0 1.0 1.0</size></box></geometry>
+          <material><ambient>0.5 0.5 0.5 1</ambient></material>
+        </visual>
+        <pose>-7 0 0 0 0 0</pose>
+      </link>
+    </model>
+
+    <model name="cylinder">
+      <static>false</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+              <cylinder>
+                    <radius>0.2</radius>
+                    <length>0.5</length>
+              </cylinder>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><cylinder><radius>0.5</radius><length>0.5</length></cylinder></geometry>
+          <material><ambient>0 0 1 1</ambient></material>
+        </visual>
+        <pose>2.5 2 0 0 0 0</pose>
+      </link>
     </model>
   </world>
 </sdf>

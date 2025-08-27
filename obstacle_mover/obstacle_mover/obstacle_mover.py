@@ -15,16 +15,15 @@ class ObstacleMover(Node):
         self.timer_ = self.create_timer(0.01, self.obstacle_mover)
         
     def odom_callback(self, msg):
-        self.x = msg.pose.pose.position.x
-        y = msg.pose.pose.position.y
+        self.x = msg.pose.pose.position.y
     
     def obstacle_mover(self):
         twist_msg = Twist()
-        if 4.5 < self.x < 5.0:
+        if 0 < self.x < 1.5:
             self.factor = -1.0
-        elif -4.5 > self.x > -5.0:
+        elif -4.0 > self.x > -4.5:
             self.factor = 1.0
-        twist_msg.linear.x = self.factor * 2.0
+        twist_msg.linear.y = self.factor * 0.5
         self.obstacle_pub.publish(twist_msg)
 
 

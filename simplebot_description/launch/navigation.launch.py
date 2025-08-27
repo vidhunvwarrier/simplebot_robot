@@ -8,7 +8,7 @@ import os
 def generate_launch_description():
     pkg_dir = get_package_share_directory("simplebot_description")
     nav_param_file = os.path.join(pkg_dir, 'config', 'nav2.yaml')
-    map_file = os.path.join(pkg_dir, 'map', 'grid_map.yaml')
+    map_file = os.path.join(pkg_dir, 'map', 'grid_map2.yaml')
     
     navigation_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
